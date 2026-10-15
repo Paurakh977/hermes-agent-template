@@ -1,0 +1,29 @@
+# Deployment defaults applied ON TOP of the Dockerfile-patched upstream template
+# (/opt/hermes/cli-config.yaml.example) at image build time by
+# scripts/patch_template_defaults.py. This file is the independently-editable
+# source of truth for fresh-boot defaults: edit here, rebuild, done.
+#
+# Scope rules (enforced by the patch script):
+#   - ONLY these keys may be set here: compression.threshold and mcp_servers.
+#   - terminal:, model:, _config_version and everything else are NEVER touched:
+#     terminal stays exactly as the Dockerfile's Docker-backend patch leaves it.
+#   - Existing valid volumes are never overwritten (see scripts/seed_config.py):
+#     this overlay only affects FRESH seeds (missing/invalid volume config).
+
+compression:
+  # Compress later than upstream default (0.50). 0.85 keeps more history in
+  # context before summarizing; small-context models (<512K) are floored at
+  # 0.75 by Hermes itself, so this mainly affects large-window models.
+  threshold: 0.85
+
+mcp_servers:
+  # Free Parallel Search MCP: real-time web search + URL fetch for agents.
+  # Anonymous, no API key. Higher limits via Bearer key or /mcp-oauth.
+  # See https://docs.parallel.ai/integrations/mcp/search-mcp
+  # trust: untrusted -> write-capable tools need user approval (correct for a
+  #   server we don't control; read-only search/fetch stay frictionless).
+  # lazy: true -> tools register from schema cache, connects on first use.
+  parallel-search:
+    url: "https://search.parallel.ai/mcp"
+    trust: untrusted
+    lazy: true

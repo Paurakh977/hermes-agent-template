@@ -1,0 +1,6 @@
+name: writer
+version: 0.1.0
+description: "Writer agent: drafting, voice, narrative flow and docs. Inherits deployment defaults (docker sandbox, 0.85 compression, Parallel Search MCP, better-auth skills)."
+hermes_requires: ">=0.21.0"
+author: "V16"
+license: "MIT"

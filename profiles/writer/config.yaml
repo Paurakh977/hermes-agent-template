@@ -1,0 +1,38 @@
+# Writer profile config (installed verbatim on `profile install`).
+#
+# Inherits from the DEFAULT profile at load time (see
+# scripts/patch_profile_config_inherit.py, verified by the Dockerfile build):
+#   mcp_servers.* -> merged from the base config (Parallel Search included)
+#   plugins.*     -> merged from the base config
+# Everything else here is this profile's own. Keep this file minimal on
+# purpose: terminal carries the per-profile DIND-resolvable mount
+# (/opt/data/profiles/writer/config.yaml, never the shared root path),
+# compression pins the deployment default (profiles do NOT inherit it).
+_config_version: 46
+
+model:
+  default: "stepfun/step-5-preview:free"
+  provider: "nous"
+  base_url: "https://inference-api.nousresearch.com/v1"
+
+terminal:
+  backend: "docker"
+  docker_image: "hermes-sandbox-cli:0.21.5"
+  docker_volumes:
+  - "/opt/data/profiles/writer/config.yaml:/opt/data/config.yaml:ro"
+  - "/run/config-broker/public:/run/config-broker:ro"
+  docker_env:
+    HERMES_HOME: "/opt/data"
+  cwd: "/workspace"
+  timeout: 180
+  home_mode: "auto"
+  docker_mount_cwd_to_workspace: false
+  lifetime_seconds: 300
+  container_cpu: 1
+  container_memory: 5120
+  container_disk: 51200
+  container_persistent: true
+
+compression:
+  enabled: true
+  threshold: 0.85

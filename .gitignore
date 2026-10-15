@@ -1,0 +1,61 @@
+# NEVER commit secrets or runtime state from any profile or template dir.
+# The installer hard-excludes these on `profile install` too — this file
+# protects the AUTHOR side (git add/commit), the installer protects the
+# recipient side. Both must hold.
+
+# Credentials & secrets
+.env
+auth.json
+*.pem
+*.key
+mcp-tokens/
+vault/
+proxy/
+honcho.json
+mem0.json
+mcp-tokens.json
+teams_pipeline_store.json
+
+# SSH / cloud CLIs (also nested under skill homes)
+.ssh/
+.aws/
+.gnupg/
+.kube/
+.docker/
+.azure/
+.config/gh/
+.config/gcloud/
+.envrc
+
+# User data — never shipped
+memories/
+sessions/
+logs/
+plans/
+workspace/
+home/
+*_cache/
+browser_screenshots/
+document_cache/
+checkpoints/
+sandboxes/
+backups/
+state-snapshots/
+*.db
+*.db-shm
+*.db-wal
+*.db-journal
+gateway.pid
+gateway_state.json
+processes.json
+active_profile
+auth.lock
+*.bak
+*.bak-*
+
+# Local overrides (user-reserved, never distributed)
+local/
+
+# OS / editor noise
+.DS_Store
+Thumbs.db
