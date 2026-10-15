@@ -3,6 +3,7 @@
 Drafting, voice, narrative flow and docs. Inherits deployment defaults:
 docker sandbox terminal, `compression.threshold: 0.85`, the Parallel Search
 MCP (merged from the default profile at load), and the better-auth skill pack.
+Ships its own DeepWiki MCP (free, keyless) for reading public GitHub repos.
 
 ## Install (inside the deployment)
 

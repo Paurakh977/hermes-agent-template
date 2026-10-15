@@ -36,3 +36,16 @@ terminal:
 compression:
   enabled: true
   threshold: 0.85
+
+# Writer's own MCP. The base profile's servers (Parallel Search) merge in
+# underneath at load (see scripts/patch_profile_config_inherit.py) — this
+# block only ADDS writer-specific servers, never replaces the base set.
+mcp_servers:
+  # DeepWiki: ask questions about any public GitHub repo (docs, code,
+  # architecture). Free, no API key. Same hardening as the base search MCP:
+  # untrusted (write-capable tools stay approval-gated) + lazy (connects on
+  # first use).
+  deepwiki:
+    url: "https://mcp.deepwiki.com/mcp"
+    trust: untrusted
+    lazy: true
